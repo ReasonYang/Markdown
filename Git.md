@@ -138,7 +138,13 @@ git add 文件名
 
 git add 文件夹/    添加整个文件夹及内容
 
+git add doc.md user/profile.txt    将多个文件到暂存区 
+
 git add *.文件类型   添加目录中所有此文件类型的文件
+
+git add -A, --all 添加所有跟踪和未跟踪文件的更改 (add changes from all tracked and untracked files)
+
+git add -u, --update 只更新已被跟踪文件
 
 2）案例实操
 
