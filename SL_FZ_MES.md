@@ -287,3 +287,55 @@ public void PrintReelInsoar3806NewNew(LotDto lotDto)
 选择分批结果 和 打印模板后 打印查看结果标签
 
 ![image-20220909153337479](img/image-20220909153337479.png)
+
+## Lumens5630标签打印添加两个字段
+
+### 需求：
+
+将Lumens5630标签如下图中的Lumens7020标签一样添加 材料码（#F03-3 ）和 材料名称（HC 28 -> 26） 两个字段
+
+![image-20220921163002382](img/image-20220921163002382.png)
+
+### 修改:
+
+SL.MES.UI.WPF\Extensions\MESHelper\PrintHelper.cs
+
+```c#
+public void PrintReelLumens5630(LotDto lotDto)
+        {
+            try
+            {
+                btFormat.SubStrings["PN"].Value=lotDto.WorkOrderDto.CPN1 + "-" + lotDto.SplitProBinDto.CustomerBinNo;
+                btFormat.SubStrings["LotNo"].Value=lotDto.LotNumber.Split('%')[0];
+                btFormat.SubStrings["VF"].Value=lotDto.SplitProBinDto.ParVfValue;
+                btFormat.SubStrings["IV"].Value=lotDto.SplitProBinDto.ParIvValue;
+                btFormat.SubStrings["CIE"].Value=lotDto.SplitProBinDto.ParCieNumber;
+                btFormat.SubStrings["QTY"].Value = ((int)(lotDto.Qty * 1000)).ToString();
+                btFormat.SubStrings["SN"].Value=lotDto.LotNumber.Split('%')[1].Split('$')[0];
+                btFormat.SubStrings["BIN"].Value=lotDto.SplitProBinDto.CustomerBinNo;
+                btFormat.SubStrings["BN"].Value=lotDto.LotNumber;
+                //添加两个标签打印字段（名称不符合标准，但已有字段，直接使用，不做新增，）
+                btFormat.SubStrings["TempNo"].Value = lotDto.WorkOrderDto.MaterialNo;
+                btFormat.SubStrings["MaterialName"].Value = lotDto.WorkOrderDto.MaterialName;
+                btFormat.Print();
+            }
+            catch
+            {
+                RadWindowHelper.ShowErrorMessageBox("打印失败!");
+            }
+        }
+```
+
+修改标签模板文件LUMENS_5630(NewNew).btw，添加两个文本，并与TempNo、MaterialName绑定
+
+![image-20220921163603798](img/image-20220921163603798.png)
+
+### 测试：
+
+新建任务单，输入 材料码 与 材料名称 
+
+![image-20220921163900688](img/image-20220921163900688.png)
+
+分批记录中选择LUMENS_5630打印模板打印，结果如下
+
+![image-20220921164050000](img/image-20220921164050000.png)
