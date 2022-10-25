@@ -1,12 +1,19 @@
 # 信息
 
-四联封装安装路径 ：  10.0.0.60：9095
+四联封装安装路径 ：  10.0.0.60:9095
 
 封装共享文件夹：	\ \10.0.0.80
 
 mes系统 管理账号：admin 密码：majunjie
 
 10.0.0.60服务器 用户名  Administrator  密码 $ilian@2021
+
+系统模板开发教程：https://aspnetboilerplate.com/Pages/Documents/Object-To-Object-Mapping
+
+系统插件版本：
+
+- Telerik_UI_for_WPF_2021_2_615_Dev_Downloadly.ir.rar
+- BT2016_R1_3045_Full.exe （32bit）
 
 # 发布流程：
 
@@ -34,8 +41,8 @@ win+R 输入 mstsc
 
 SL_FZ_MES UI 中 
 
-- 覆盖 ApplicationFiles 中的四联封装MES_1_0_0_XXX  /  setup.exe / 四联封装MES.application 三个文件
-- 注意ApplicationFiles 中的四联封装MES_1_0_0_XXX 版本号 = 服务器版本号 + 1
+- 覆盖  setup.exe / 四联封装MES.application 两个文件
+- 复制ApplicationFiles 中的四联封装MES_1_0_0_XXX文件夹，版本号 + 1，然后将新版本文件覆盖 
 
 SL_FZ_MES HOST 中
 
@@ -314,7 +321,7 @@ public void PrintReelLumens5630(LotDto lotDto)
                 btFormat.SubStrings["SN"].Value=lotDto.LotNumber.Split('%')[1].Split('$')[0];
                 btFormat.SubStrings["BIN"].Value=lotDto.SplitProBinDto.CustomerBinNo;
                 btFormat.SubStrings["BN"].Value=lotDto.LotNumber;
-                //添加两个标签打印字段（名称不符合标准，但已有字段，直接使用，不做新增，）
+                //添加两个标签打印字段（名称不符合标准，但已有字段，直接使用，不做新增）
                 btFormat.SubStrings["TempNo"].Value = lotDto.WorkOrderDto.MaterialNo;
                 btFormat.SubStrings["MaterialName"].Value = lotDto.WorkOrderDto.MaterialName;
                 btFormat.Print();
